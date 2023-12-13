@@ -1,10 +1,10 @@
-.custom_widget .action .app-btn-primary {
+.custom_widget .app-btn-primary {
   background: #87CEEB;
   border: 2px solid #1B4965;
   color: #1B4965;
 }
 
-.custom_widget .action .app-btn-primary:hover {
+.custom_widget .app-btn-primary:hover {
   box-shadow: #051B4965;
 }
 

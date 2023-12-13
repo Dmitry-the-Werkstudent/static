@@ -1,0 +1,20 @@
+.custom_widget .action .app-btn-primary {
+  background: #87CEEB;
+  border: 2px solid #1B4965;
+  color: #1B4965;
+}
+
+.custom_widget .action .app-btn-primary:hover {
+  box-shadow: #051B4965;
+}
+
+.custom_widget .radio-button-option-container .radio-outer-circle {
+  border: 2px solid #87CEEB;
+}
+.custom_widget .radio-button-option-container .radio-inner-circle {
+  background: #87CEEB;
+}
+
+.custom_widget .radio-button-option-container .unselected {
+  border: 2px solid #1B4965;
+}

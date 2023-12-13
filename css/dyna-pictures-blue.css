@@ -5,7 +5,7 @@
 }
 
 .custom_widget .app-btn-primary:hover {
-  box-shadow: #051B4965;
+  box-shadow: rgba(27, 73, 101, 0.3);
 }
 
 .custom_widget .radio-button-option-container .radio-outer-circle {

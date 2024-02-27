@@ -4,25 +4,27 @@ function conditional(cond, show, dict) {
 
   if (cond.constructor === "".constructor) {
     // single question without further action
+    const el = findQuestion(cond);
     if (show) {
-      $(".customization2_attendee_further-data_custom-question:contains('" + cond + "')").parent().show();
+      el.parent().show();
     } else {
-      $(".customization2_attendee_further-data_custom-question:contains('" + cond + "')").parent().hide();
+      el.parent().hide();
     }
-  
   } else if (cond.constructor === [].constructor) {
     // questions without further action
     cond.forEach(c => conditional(c, show, dict));
-
   } else {
-    for (const question in cond) {
-      const answers = cond[question] ?? { };
-      const el = $(".customization2_attendee_further-data_custom-question:contains('" + question + "')");
+    for (const q in cond) {
+      const type = q[0];
+      const question = q.slice(1);
+      const answers = cond[q] ?? { };
+      const el = findQuestion(question);
 
       if (!(question in dict)) {
         function handle() {
-          const selected = el.find("input:checked").next(".customization2_attendee_further-data_custom-question_radio-line_label")
-            .find(".vv-radio__label-text").text().trim();
+          let selected;
+          if (type == "*") selected = el.find("input:checked").next(".customization2_attendee_further-data_custom-question_radio-line_label").find(".vv-radio__label-text").text().trim();
+          if (type == "|") selected = el.find(".customization2_attendee_further-data_custom-question_dropdown .vv-selection-input__value").text().trim();
           for (const possible in answers) {
             const match = (
               possible == selected ||
@@ -32,6 +34,7 @@ function conditional(cond, show, dict) {
             conditional(answers[possible], match, dict);
           }
         }
+
         el.on("change", handle);
         dict[question] = handle;
       }
@@ -46,4 +49,10 @@ function conditional(cond, show, dict) {
       }
     }
   }
+}
+
+function findQuestion(exactLabel) {
+  return $(".customization2_attendee_further-data_custom-question)".filter(
+    (i, q) => q.find(".customization2_attendee_further-data_custom-question_label").text().trim() == exactLabel
+  );
 }

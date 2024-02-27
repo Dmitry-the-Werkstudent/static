@@ -1,4 +1,4 @@
-function conditional(cond, show, set) {
+function conditional(cond, show, dict) {
   if (cond.constructor === "".constructor) {
     // single question without further action
     const el = findQuestion(cond);
@@ -9,7 +9,7 @@ function conditional(cond, show, set) {
     }
   } else if (cond.constructor === [].constructor) {
     // multiple questions without further action
-    cond.forEach(c => conditional(c, show, set));
+    cond.forEach(c => conditional(c, show, dict));
   } else {
     for (const q in cond) {
       const type = q[0];
@@ -32,18 +32,18 @@ function conditional(cond, show, set) {
                 (possible.startsWith("{...}") && selected.endsWith(possible.slice(5))) ||
                 (possible.endsWith("{...}") && selected.startsWith(possible.slice(0, -5)))
               );
-              conditional(answers[possible], match, set);
+              conditional(answers[possible], match, dict);
             }
           }
           // setup change listener
           el.on("change", handle);
           set.add(question);
-          handle();
         }
+        handle();
       } else {
         el.parent().hide();
         // hide all sub-questions
-        for (const answer in answers) { conditional(answers[answer], false, set); }
+        for (const answer in answers) { conditional(answers[answer], false, dict); }
       }
     }
   }
@@ -56,5 +56,5 @@ function findQuestion(exactLabel) {
 }
 
 function run(cond) {
-  conditional(cond, true, new Set());
+  conditional(cond, true, { });
 }

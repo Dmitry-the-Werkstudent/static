@@ -1,7 +1,4 @@
 function conditional(cond, show, dict) {
-  show = show ?? true;
-  dict = dict ?? { };
-
   if (cond.constructor === "".constructor) {
     // single question without further action
     const el = findQuestion(cond);
@@ -31,7 +28,7 @@ function conditional(cond, show, dict) {
               (possible.startsWith("{...}") && selected.endsWith(possible.slice(5))) ||
               (possible.endsWith("{...}") && selected.startsWith(possible.slice(0, -5)))
             );
-            conditional(answers[possible], match, dict);
+            run(answers[possible], match, dict);
           }
         }
 
@@ -55,4 +52,8 @@ function findQuestion(exactLabel) {
   return $(".customization2_attendee_further-data_custom-question)").filter(
     (i, q) => q.find(".customization2_attendee_further-data_custom-question_label").text().trim() == exactLabel
   );
+}
+
+function run(cond) {
+  conditional(cond, true, { });
 }

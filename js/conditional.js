@@ -50,7 +50,7 @@ function conditional(cond, show, dict) {
 
 function findQuestion(exactLabel) {
   return $(".customization2_attendee_further-data_custom-question").filter(
-    (i, q) => q.find(".customization2_attendee_further-data_custom-question_label").text().trim() == exactLabel
+    (i, q) => $(q).find(".customization2_attendee_further-data_custom-question_label").text().trim() == exactLabel
   );
 }
 

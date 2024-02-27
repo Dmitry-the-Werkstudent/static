@@ -2,6 +2,7 @@ function conditional(cond, show, dict) {
   if (cond.constructor === "".constructor) {
     // single question without further action
     const el = findQuestion(cond);
+    console.log("show", cond, ":", show);
     if (show) {
       el.parent().show();
     } else {

@@ -62,9 +62,12 @@ function conditional(cond, show, dict) {
 }
 
 function findQuestion(exactLabel) {
-  return $(".customization2_attendee_further-data_custom-question").filter(
-    (i, q) => $(q).find(".customization2_attendee_further-data_custom-question_label").text().trim() == exactLabel
-  );
+  return $(".customization2_attendee_further-data_custom-question").filter((i, q) => {
+    const label = $(q).find(".customization2_attendee_further-data_custom-question_label");
+    const allText = label.text().trim();
+    if (label.find("vv-optional-text").length) exactLabel += " (optional)";
+    return allText == exactLabel;
+  });
 }
 
 function run(cond) {

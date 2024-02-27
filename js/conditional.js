@@ -24,7 +24,12 @@ function conditional(cond, show, dict) {
           const selected = el.find("input:checked").next(".customization2_attendee_further-data_custom-question_radio-line_label")
             .find(".vv-radio__label-text").text().trim();
           for (const possible in answers) {
-            conditional(answers[possible], possible == selected, dict);
+            const match = (
+              possible == selected ||
+              (possible.startsWith("{...}") && selected.endsWith(possible.slice(5))) ||
+              (possible.endsWith("{...}") && selected.startsWith(possible.slice(0, -5)))
+            );
+            conditional(answers[possible], match, dict);
           }
         }
         el.on("change", handle);
@@ -41,8 +46,4 @@ function conditional(cond, show, dict) {
       }
     }
   }
-}
-
-function testDmitry() {
-  console.log("Test was successfull!!!");
 }

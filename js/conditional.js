@@ -16,6 +16,7 @@ function conditional(cond, show, dict) {
       const question = q.slice(1);
       const answers = cond[q] ?? { };
       const el = findQuestion(question);
+      console.log(q, el);
 
       if (!(question in dict)) {
         function handle() {

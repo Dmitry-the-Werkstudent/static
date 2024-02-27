@@ -24,12 +24,15 @@ function conditional(cond, show, dict) {
           if (type == "*") selected = el.find("input:checked").next(".customization2_attendee_further-data_custom-question_radio-line_label").find(".vv-radio__label-text").text().trim();
           if (type == "|") selected = el.find(".customization2_attendee_further-data_custom-question_dropdown .vv-selection-input__value").text().trim();
 
+          console.log("handling '" + question + "' -> '" + selected + "'");
+          
           for (const possible in answers) {
             const match = (
               possible == selected ||
               (possible.startsWith("{...}") && selected.endsWith(possible.slice(5))) ||
               (possible.endsWith("{...}") && selected.startsWith(possible.slice(0, -5)))
             );
+            console.log("checking against '" + possible + "' ->", match);
             conditional(answers[possible], match, dict);
           }
         }

@@ -50,8 +50,7 @@ function conditional(cond, show, dict) {
       } else {
         el.parent().hide();
         // hide all sub-questions
-        //for (const answer in answers) { conditional(answers[answer], false, dict); }
-        // handled by the dict?
+        for (const answer in answers) { conditional(answers[answer], false, dict); }
       }
     }
   }

@@ -56,3 +56,5 @@ function findQuestion(exactLabel) {
     (i, q) => q.find(".customization2_attendee_further-data_custom-question_label").text().trim() == exactLabel
   );
 }
+
+const exported = { conditional, findQuestion };

@@ -42,3 +42,7 @@ function conditional(cond, show, dict) {
     }
   }
 }
+
+function testDmitry() {
+  console.log("Test was successfull!!!");
+}

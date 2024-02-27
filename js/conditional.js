@@ -2,7 +2,6 @@ function conditional(cond, show, dict) {
   if (cond.constructor === "".constructor) {
     // single question without further action
     const el = findQuestion(cond);
-    console.log("show", cond, ":", show);
     if (show) {
       el.parent().show();
     } else {
@@ -29,8 +28,6 @@ function conditional(cond, show, dict) {
           let selected;
           if (type == "*") selected = el.find("input:checked").next(".customization2_attendee_further-data_custom-question_radio-line_label").find(".vv-radio__label-text").text().trim();
           if (type == "|") selected = el.find(".customization2_attendee_further-data_custom-question_dropdown .vv-selection-input__value").text().trim();
-
-          console.log("handle", question, "->", selected);
           
           for (const possible in answers) {
             const match = (
@@ -38,7 +35,6 @@ function conditional(cond, show, dict) {
               (possible.startsWith("{...}") && selected.endsWith(possible.slice(5))) ||
               (possible.endsWith("{...}") && selected.startsWith(possible.slice(0, -5)))
             );
-            console.log("matching", possible, "... matched:", match);
             conditional(answers[possible], match, dict);
           }
         }
@@ -46,7 +42,6 @@ function conditional(cond, show, dict) {
         el.on("change", handle);
         dict[question] = handle;
       }
-      console.log("show", question, ":", show);
       if (show) {
         // show the actual question and handle how to show sub-questions
         el.parent().show();
@@ -63,9 +58,9 @@ function conditional(cond, show, dict) {
 function findQuestion(exactLabel) {
   return $(".customization2_attendee_further-data_custom-question").filter((i, q) => {
     const label = $(q).find(".customization2_attendee_further-data_custom-question_label");
-    const allText = label.get(0).innerText.trim();
+    const allText = [...label.get(0).childNodes].map(c => $(c).text().trim()).join("");
     let match = exactLabel;
-    if(label.find("vv-optional-text").length) match += " " + label.find("vv-optional-text").get(0).innerText.trim();
+    if(label.find("vv-optional-text").length) match += label.find("vv-optional-text").text().trim();
     return allText == match;
   });
 }

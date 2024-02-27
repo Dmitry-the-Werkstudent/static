@@ -37,7 +37,7 @@ function conditional(cond, show, dict) {
           }
           // setup change listener
           el.on("change", handle);
-          set.add(question);
+          dict[question] = handle;
         }
         dict[question]();
       } else {

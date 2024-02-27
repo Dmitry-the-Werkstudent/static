@@ -38,6 +38,7 @@ function conditional(cond, show, dict) {
               (possible.startsWith("{...}") && selected.endsWith(possible.slice(5))) ||
               (possible.endsWith("{...}") && selected.startsWith(possible.slice(0, -5)))
             );
+            console.log("matching", possible, "... matched:", match);
             conditional(answers[possible], match, dict);
           }
         }
@@ -45,14 +46,13 @@ function conditional(cond, show, dict) {
         el.on("change", handle);
         dict[question] = handle;
       }
-      dict[question]();
-
-      // hide/show the actual question
       if (show) {
+        // show the actual question and handle how to show sub-questions
         el.parent().show();
+        dict[question]();
       } else {
+        // hide the question and all sub-questions
         el.parent().hide();
-        // hide all sub-questions
         for (const answer in answers) { conditional(answers[answer], false, dict); }
       }
     }

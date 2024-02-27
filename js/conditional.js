@@ -2,6 +2,7 @@ function conditional(cond, show, dict) {
   if (cond.constructor === "".constructor) {
     // single question without further action
     const el = findQuestion(cond);
+    console.log("making", cond, "visible:", show);
     if (show) {
       el.parent().show();
     } else {
@@ -14,7 +15,12 @@ function conditional(cond, show, dict) {
     for (const q in cond) {
       const type = q[0];
       const question = q.slice(1);
-      const answers = cond[q] ?? { };
+      const answers = cond[q];
+      if (answers == null || answers == "") {
+        conditional(q, show, dict);
+        continue;
+      }
+
       const el = findQuestion(question);
 
       // setup handler for sub-answers
@@ -48,7 +54,8 @@ function conditional(cond, show, dict) {
       } else {
         el.parent().hide();
         // hide all sub-questions
-        for (const answer in answers) { conditional(answers[answer], false, dict); }
+        //for (const answer in answers) { conditional(answers[answer], false, dict); }
+        // handled by the dict?
       }
     }
   }

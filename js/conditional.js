@@ -2,6 +2,7 @@ function conditional(cond, show, dict) {
   if (cond.constructor === "".constructor) {
     // single question without further action
     const el = findQuestion(cond);
+    console.log("show", cond, ":", show);
     if (show) {
       el.parent().show();
     } else {
@@ -29,6 +30,8 @@ function conditional(cond, show, dict) {
           if (type == "*") selected = el.find("input:checked").next(".customization2_attendee_further-data_custom-question_radio-line_label").find(".vv-radio__label-text").text().trim();
           if (type == "|") selected = el.find(".customization2_attendee_further-data_custom-question_dropdown .vv-selection-input__value").text().trim();
 
+          console.log("handle", question, "->", selected);
+          
           for (const possible in answers) {
             const match = (
               possible == selected ||

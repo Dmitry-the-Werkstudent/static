@@ -46,6 +46,7 @@ function conditional(cond, show, dict) {
         el.on("change", handle);
         dict[question] = handle;
       }
+      console.log("show", question, ":", show);
       if (show) {
         // show the actual question and handle how to show sub-questions
         el.parent().show();

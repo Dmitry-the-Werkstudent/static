@@ -28,6 +28,7 @@ function conditional(cond, show, dict) {
           let selected;
           if (type == "*") selected = el.find("input:checked").next(".customization2_attendee_further-data_custom-question_radio-line_label").find(".vv-radio__label-text").text().trim();
           if (type == "|") selected = el.find(".customization2_attendee_further-data_custom-question_dropdown .vv-selection-input__value").text().trim();
+          console.log("handle!", selected);
 
           for (const possible in answers) {
             const match = (

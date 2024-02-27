@@ -61,7 +61,7 @@ function findQuestion(exactLabel) {
   return $(".customization2_attendee_further-data_custom-question").filter((i, q) => {
     const label = $(q).find(".customization2_attendee_further-data_custom-question_label");
     const allText = label.get(0).innerText;
-    exactLabel += " " + label.find("vv-optional-text").get(0).innerText;
+    if(label.find("vv-optional-text").length) exactLabel += " " + label.find("vv-optional-text").get(0).innerText;
     return allText == exactLabel;
   });
 }

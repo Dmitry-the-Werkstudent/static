@@ -9,7 +9,7 @@ async function conditional(cond, show, dict) {
     }
   } else if (cond.constructor === [].constructor) {
     // multiple questions without further action
-    cond.forEach(c => { await conditional(c, show, dict); });
+    for (const c of cond) { await conditional(c, show, dict); }
   } else {
     for (const q in cond) {
       const type = q[0];

@@ -3,9 +3,9 @@ async function conditional(cond, show, dict) {
     // single question without further action
     const el = await custom_js("findQuestion", cond);
     if (show) {
-      el.parent().show();
+      el.show();
     } else {
-      el.parent().hide();
+      el.hide();
     }
   } else if (cond.constructor === [].constructor) {
     // multiple questions without further action
@@ -44,11 +44,11 @@ async function conditional(cond, show, dict) {
       }
       if (show) {
         // show the actual question and handle how to show sub-questions
-        el.parent().show();
+        el.show();
         await dict[question]();
       } else {
         // hide the question and all sub-questions
-        el.parent().hide();
+        el.hide();
         for (const answer in answers) { await conditional(answers[answer], false, dict); }
       }
     }

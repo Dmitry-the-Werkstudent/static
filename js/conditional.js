@@ -1,7 +1,7 @@
-function conditional(cond, show, dict) {
+async function conditional(cond, show, dict) {
   if (cond.constructor === "".constructor) {
     // single question without further action
-    const el = findQuestion(cond);
+    const el = await custom_js("findQuestion", cond);
     if (show) {
       el.parent().show();
     } else {
@@ -9,18 +9,18 @@ function conditional(cond, show, dict) {
     }
   } else if (cond.constructor === [].constructor) {
     // multiple questions without further action
-    cond.forEach(c => conditional(c, show, dict));
+    cond.forEach(c => { await conditional(c, show, dict); });
   } else {
     for (const q in cond) {
       const type = q[0];
       const question = q.slice(1);
       const answers = cond[q];
       if (answers == null || answers == "") {
-        conditional(q, show, dict);
+        await conditional(q, show, dict);
         continue;
       }
 
-      const el = findQuestion(question);
+      const el = await custom_js("findQuestion", question);
 
       // setup handler for sub-answers
       if (!(question in dict)) {
@@ -35,7 +35,7 @@ function conditional(cond, show, dict) {
               (possible.startsWith("{...}") && selected.endsWith(possible.slice(5))) ||
               (possible.endsWith("{...}") && selected.startsWith(possible.slice(0, -5)))
             );
-            conditional(answers[possible], match, dict);
+            await conditional(answers[possible], match, dict);
           }
         }
         // setup change listener
@@ -49,22 +49,12 @@ function conditional(cond, show, dict) {
       } else {
         // hide the question and all sub-questions
         el.parent().hide();
-        for (const answer in answers) { conditional(answers[answer], false, dict); }
+        for (const answer in answers) { await conditional(answers[answer], false, dict); }
       }
     }
   }
 }
 
-function findQuestion(exactLabel) {
-  return $(".customization2_attendee_further-data_custom-question").filter((i, q) => {
-    const label = $(q).find(".customization2_attendee_further-data_custom-question_label");
-    const allText = [...label.get(0).childNodes].map(c => $(c).text().trim()).join("");
-    let match = exactLabel;
-    if(label.find("vv-optional-text").length) match += label.find("vv-optional-text").text().trim();
-    return allText == match;
-  });
-}
-
-function run(cond) {
-  conditional(cond, true, { });
+async function run(cond) {
+  await conditional(cond, true, { });
 }

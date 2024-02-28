@@ -13,5 +13,5 @@ async function run(exactLabel) {
       if(label.find("vv-optional-text").length) match += label.find("vv-optional-text").text().trim();
       return allText == match;
     }
-  });
+  }).parent();
 }

@@ -11,12 +11,10 @@ async function conditional(cond, show, dict) {
     // multiple questions without further action
     for (const c of cond) { await conditional(c, show, dict); }
   } else {
-    for (const q in cond) {
-      const type = q[0];
-      const question = q.slice(1);
+    for (const question in cond) {
       const answers = cond[q];
       if (answers == null || answers == "") {
-        await conditional(q, show, dict);
+        await conditional(question, show, dict);
         continue;
       }
 
@@ -26,8 +24,8 @@ async function conditional(cond, show, dict) {
       if (!(question in dict)) {
         async function handle() {
           let selected;
-          if (type == "*") selected = el.find("input:checked").next(".customization2_attendee_further-data_custom-question_radio-line_label").find(".vv-radio__label-text").text().trim();
-          if (type == "|") selected = el.find(".customization2_attendee_further-data_custom-question_dropdown .vv-selection-input__value").text().trim();
+          if (el.is("vv-additional-question-radio")) selected = el.find("input:checked").next(".customization2_attendee_further-data_custom-question_radio-line_label").find(".vv-radio__label-text").text().trim();
+          if (el.is("vv-additional-question-dropdown")) selected = el.find(".customization2_attendee_further-data_custom-question_dropdown .vv-selection-input__value").text().trim();
           
           for (const possible in answers) {
             const match = await custom_js("match", possible, selected);

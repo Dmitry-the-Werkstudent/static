@@ -12,7 +12,7 @@ async function conditional(cond, show, dict) {
     for (const c of cond) { await conditional(c, show, dict); }
   } else {
     for (const question in cond) {
-      const answers = cond[q];
+      const answers = cond[question];
       if (answers == null || answers == "") {
         await conditional(question, show, dict);
         continue;

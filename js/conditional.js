@@ -30,11 +30,7 @@ async function conditional(cond, show, dict) {
           if (type == "|") selected = el.find(".customization2_attendee_further-data_custom-question_dropdown .vv-selection-input__value").text().trim();
           
           for (const possible in answers) {
-            const match = (
-              possible == selected ||
-              (possible.startsWith("{...}") && selected.endsWith(possible.slice(5))) ||
-              (possible.endsWith("{...}") && selected.startsWith(possible.slice(0, -5)))
-            );
+            const match = await custom_js("match", possible, selected);
             await conditional(answers[possible], match, dict);
           }
         }
